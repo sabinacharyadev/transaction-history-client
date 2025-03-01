@@ -1,58 +1,43 @@
+/* eslint-disable react/prop-types */
 import { Button, Form } from "react-bootstrap";
 import InputField from "./InputField";
 import { useState } from "react";
-import { createUser } from "../axios/userAxios";
+import { loginUser } from "../axios/userAxios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
-const SignupForm = () => {
-  const initialFormData = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
+const LoginForm = ({ setUser }) => {
+  const initialFormData = { email: "", password: "" };
   const [formData, setFormData] = useState(initialFormData);
-  const { name, email, password, confirmPassword } = formData;
-
-  // State to implement loading
   const [isLoading, setIsLoading] = useState(false);
 
+  const { email, password } = formData;
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Hook from react router to navigate between pages without clicking
+  const navigate = useNavigate();
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // when button is clicked
-
     setIsLoading(true);
+    // send api request to try login
+    const response = await loginUser(email, password);
 
-    // Send api request to create a user
-    const response = await createUser({ name, email, password });
-    // set is loading false when response is here
     setIsLoading(false);
-    // Handle error
+
     if (response.status === "error") {
       return toast.error(response.message);
     }
-    // Handle success
     toast.success(response.message);
+    setUser(response.data);
+    // navigate to transaction page
+    navigate("/transactions");
   };
   return (
     <Form onSubmit={handleOnSubmit}>
-      <InputField
-        label="Name"
-        inputFieldAttributes={{
-          type: "text",
-          name: "name",
-          placeholder: "Enter your full name",
-          required: true,
-          value: name,
-          onChange: handleOnChange,
-        }}
-      />
-
       <InputField
         label="Email"
         inputFieldAttributes={{
@@ -77,23 +62,11 @@ const SignupForm = () => {
         }}
       />
 
-      <InputField
-        label="Confirm Password"
-        inputFieldAttributes={{
-          type: "password",
-          name: "confirmPassword",
-          placeholder: "Please confirm password",
-          required: true,
-          value: confirmPassword,
-          onChange: handleOnChange,
-        }}
-      />
-
       <Button variant="primary" type="submit" disabled={isLoading}>
-        {isLoading ? "Signing Up . . ." : "Sign up"}
+        {isLoading ? "Logging in . . ." : "Login"}
       </Button>
     </Form>
   );
 };
 
-export default SignupForm;
+export default LoginForm;

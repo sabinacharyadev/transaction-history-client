@@ -7,12 +7,22 @@ const API_BASE_URL = import.meta.env.PROD
 
 const USER_ENDPOINT = "/api/users";
 
-// CREATE | POST
+// CREATE | Signup User | POST
 export const createUser = (userObject) => {
   const response = axios
-    .post(API_BASE_URL + USER_ENDPOINT, userObject)
+    .post(`${API_BASE_URL}${USER_ENDPOINT}/signup`, userObject)
     .then((res) => res.data)
-    .catch((error) => error.message);
+    .catch((error) => console.log(error));
 
+  return response;
+};
+
+// CREATE | Login user | POST
+
+export const loginUser = (email, password) => {
+  const response = axios
+    .post(`${API_BASE_URL}${USER_ENDPOINT}/login`, { email, password })
+    .then((res) => res.data)
+    .catch((error) => console.log(error));
   return response;
 };

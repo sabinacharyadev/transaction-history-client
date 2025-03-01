@@ -1,23 +1,23 @@
 import { Col, Container, Row, Stack } from "react-bootstrap";
-import SignupForm from "../components/SignupForm";
+import LoginForm from "../components/LoginForm";
 
-const SignupPage = () => {
+const Login = ({ setUser }) => {
   return (
     <Container>
       <Row className="d-flex align-items-center justify-content-center vh-100">
         <Col>
           <Stack className="shadow-lg border rounded p-4">
-            <h1>Join Our App</h1>
+            <h1>Welcome Back</h1>
             <p>Manage your income and expense</p>
             <p>Track your Finance</p>
           </Stack>
         </Col>
 
         <Col>
-          {/* Signup Form */}
+          {/* Login Form */}
           <Stack className="shadow-lg border rounded p-4">
             <h1>Login</h1>
-            <SignupForm />
+            <LoginForm setUser={setUser} />
           </Stack>
         </Col>
       </Row>
@@ -25,4 +25,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default Login;
