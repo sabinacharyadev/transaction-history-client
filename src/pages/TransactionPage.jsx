@@ -2,34 +2,26 @@ import { Container } from "react-bootstrap";
 import TopNavBar from "../components/TopNavBar";
 import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
-import { useEffect, useState } from "react";
-import { getTransaction } from "../axios/transactionAxios";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "../redux/transaction/transactionActions";
 
 /* eslint-disable react/prop-types */
 const TransactionPage = () => {
-  const { user } = useSelector((state) => state.user);
-  const [transactions, setTransactions] = useState([{}]);
+  const dispatch = useDispatch();
 
-  const fetchTransactions = async () => {
-    const response = await getTransaction(user.id);
-    if (response.status === "error") {
-      console.log(response.error);
-      return;
-    }
-    setTransactions(response.data);
-  };
+  const { user } = useSelector((state) => state.user);
+  const { transactions } = useSelector((state) => state.transactions);
 
   useEffect(() => {
-    fetchTransactions();
-  });
+    dispatch(fetchTransactions(user.id));
+  }, [dispatch, transactions, user.id]);
   return (
     <Container>
-      <TopNavBar userName={user.name} />
-
+      <TopNavBar />
       {/* Transaction Form */}
       <TransactionForm userId={user.id} fetchTransactions={fetchTransactions} />
-      <TransactionTable transactions={transactions} />
+      <TransactionTable />
     </Container>
   );
 };

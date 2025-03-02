@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const TransactionTable = ({ transactions }) => {
+const TransactionTable = () => {
+  const { transactions } = useSelector((state) => state.transactions);
   const [selectedTransactionsId, setSelectedTransactionsId] = useState([]);
 
   const toggleSelectedTransactionIds = (transactionId) => {
@@ -24,7 +26,7 @@ const TransactionTable = ({ transactions }) => {
           <th>Amount</th>
           <th>Date</th>
           <th>
-            {selectedTransactionsId.length && (
+            {!!selectedTransactionsId.length && (
               <Button variant="outline-danger">Delete Selected</Button>
             )}
           </th>
