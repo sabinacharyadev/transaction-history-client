@@ -24,7 +24,7 @@ const TransactionTable = ({ transactions }) => {
           <th>Amount</th>
           <th>Date</th>
           <th>
-            {!!selectedTransactionsId.length && (
+            {selectedTransactionsId.length && (
               <Button variant="outline-danger">Delete Selected</Button>
             )}
           </th>

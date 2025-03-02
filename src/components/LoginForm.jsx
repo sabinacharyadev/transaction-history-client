@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Button, Form } from "react-bootstrap";
 import InputField from "./InputField";
-import { useState } from "react";
-import { loginUser } from "../axios/userAxios";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUsersAction } from "../redux/user/userActions";
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = () => {
   const initialFormData = { email: "", password: "" };
   const [formData, setFormData] = useState(initialFormData);
-  const [isLoading, setIsLoading] = useState(false);
-
   const { email, password } = formData;
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -19,23 +17,22 @@ const LoginForm = ({ setUser }) => {
 
   // Hook from react router to navigate between pages without clicking
   const navigate = useNavigate();
+  // call use dispatch hook to get dispatch function
+  const dispatch = useDispatch();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    // send api request to try login
-    const response = await loginUser(email, password);
-
-    setIsLoading(false);
-
-    if (response.status === "error") {
-      return toast.error(response.message);
-    }
-    toast.success(response.message);
-    setUser(response.data);
-    // navigate to transaction page
-    navigate("/transactions");
+    dispatch(loginUsersAction(email, password));
   };
+
+  // check if current user exists
+  // if exists please navigate to transaction page
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user.id) {
+      navigate("/transactions");
+    }
+  }, [user, navigate]);
   return (
     <Form onSubmit={handleOnSubmit}>
       <InputField
@@ -62,8 +59,8 @@ const LoginForm = ({ setUser }) => {
         }}
       />
 
-      <Button variant="primary" type="submit" disabled={isLoading}>
-        {isLoading ? "Logging in . . ." : "Login"}
+      <Button variant="primary" type="submit">
+        Login
       </Button>
     </Form>
   );

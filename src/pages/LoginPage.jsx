@@ -1,7 +1,7 @@
 import { Col, Container, Row, Stack } from "react-bootstrap";
 import LoginForm from "../components/LoginForm";
 
-const Login = ({ setUser }) => {
+const Login = () => {
   return (
     <Container>
       <Row className="d-flex align-items-center justify-content-center vh-100">
@@ -17,7 +17,7 @@ const Login = ({ setUser }) => {
           {/* Login Form */}
           <Stack className="shadow-lg border rounded p-4">
             <h1>Login</h1>
-            <LoginForm setUser={setUser} />
+            <LoginForm />
           </Stack>
         </Col>
       </Row>

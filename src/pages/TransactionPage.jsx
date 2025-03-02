@@ -4,10 +4,11 @@ import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import { useEffect, useState } from "react";
 import { getTransaction } from "../axios/transactionAxios";
+import { useSelector } from "react-redux";
 
 /* eslint-disable react/prop-types */
-const TransactionPage = (props) => {
-  const { user } = props;
+const TransactionPage = () => {
+  const { user } = useSelector((state) => state.user);
   const [transactions, setTransactions] = useState([{}]);
 
   const fetchTransactions = async () => {

@@ -5,25 +5,23 @@ import LoginPage from "./pages/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TransactionPage from "./pages/TransactionPage";
-import { useState } from "react";
 import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
   // state to track user
-  const [user, setUser] = useState({});
   return (
     <>
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<SignupPage />} />
         <Route path="signup" element={<SignupPage />} />
-        <Route path="login" element={<LoginPage setUser={setUser} />} />
+        <Route path="login" element={<LoginPage />} />
         {/* Private Routes */}
         <Route
           path="/transactions"
           element={
-            <PrivateRoutes user={user}>
-              <TransactionPage user={user} />
+            <PrivateRoutes>
+              <TransactionPage />
             </PrivateRoutes>
           }
         />
