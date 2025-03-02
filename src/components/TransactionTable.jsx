@@ -8,26 +8,36 @@ const TransactionTable = () => {
   const [selectedTransactionsId, setSelectedTransactionsId] = useState([]);
 
   const toggleSelectedTransactionIds = (transactionId) => {
-    const isIdSelected = selectedTransactionsId.includes(transactionId);
+    const isIdSelected = selectedTransactionsId.some(
+      (item) => item === transactionId
+    );
 
     isIdSelected
       ? setSelectedTransactionsId(
           selectedTransactionsId.filter((item) => item !== transactionId)
         )
-      : selectedTransactionsId([...selectedTransactionsId, transactionId]);
+      : setSelectedTransactionsId([...selectedTransactionsId, transactionId]);
   };
   return (
     <Table striped bordered hover className="text-center">
+      {console.log("transactions", transactions)}
       <thead>
-        <tr>
+        <tr
+          style={{
+            height: "4rem",
+          }}
+        >
           <th>#</th>
           <th>Title</th>
           <th>Type</th>
           <th>Amount</th>
           <th>Date</th>
-          <th>
+          <th style={{ width: "20rem" }}>
             {!!selectedTransactionsId.length && (
               <Button variant="outline-danger">Delete Selected</Button>
+            )}
+            {!selectedTransactionsId.length && (
+              <span className="text-danger">Delete</span>
             )}
           </th>
         </tr>
@@ -60,7 +70,7 @@ const TransactionTable = () => {
                 <Form.Check
                   type="checkbox"
                   name={transaction._id}
-                  onClick={() => toggleSelectedTransactionIds(transaction.id)}
+                  onClick={() => toggleSelectedTransactionIds(transaction._id)}
                 ></Form.Check>
               </Form>
             </td>
