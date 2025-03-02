@@ -4,9 +4,12 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import InputField from "./InputField";
 import { toast } from "react-toastify";
 import { createTransaction } from "../axios/transactionAxios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "../redux/transaction/transactionActions";
 
-const TransactionForm = (props) => {
-  const { userId, fetchTransactions } = props;
+const TransactionForm = () => {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const initialFormData = {
     title: "",
     type: "expense",
@@ -32,7 +35,7 @@ const TransactionForm = (props) => {
     e.preventDefault();
 
     //send API request
-    const response = await createTransaction({ ...formData, userId });
+    const response = await createTransaction({ ...formData, userId: user.id });
 
     // Handle Error
     if (response.status === "error") {
@@ -40,7 +43,7 @@ const TransactionForm = (props) => {
     }
     // Handle Success
     toast.success(response.message);
-    fetchTransactions();
+    dispatch(fetchTransactions(user.id));
   };
 
   return (
