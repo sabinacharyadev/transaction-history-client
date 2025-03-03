@@ -27,8 +27,7 @@ const TransactionTable = () => {
   };
   return (
     <>
-      {" "}
-      <h2>Transactions</h2>
+      <h2 className="m-3">Transactions</h2>
       <Table striped bordered hover className="text-center">
         <thead>
           <tr
