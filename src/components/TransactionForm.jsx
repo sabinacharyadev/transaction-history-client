@@ -35,7 +35,10 @@ const TransactionForm = () => {
     e.preventDefault();
 
     //send API request
-    const response = await createTransaction({ ...formData, userId: user.id });
+    const response = await createTransaction(user.id, {
+      ...formData,
+      userId: user.id,
+    });
 
     // Handle Error
     if (response.status === "error") {

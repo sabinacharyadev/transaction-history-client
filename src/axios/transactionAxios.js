@@ -9,9 +9,13 @@ const transactionEndpoint = "/api/transactions";
 const API_URL = API_BASE_URL + transactionEndpoint;
 
 // Create transaction | POST
-export const createTransaction = (transactionObj) => {
+export const createTransaction = (userId, transactionObj) => {
   const response = axios
-    .post(`${API_URL}`, transactionObj)
+    .post(`${API_URL}`, transactionObj, {
+      headers: {
+        authorization: userId,
+      },
+    })
     .then((res) => res.data)
     .catch((error) => console.log(error));
 
