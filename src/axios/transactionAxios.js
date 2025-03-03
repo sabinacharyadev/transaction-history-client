@@ -1,7 +1,9 @@
 import axios from "axios";
 
 // API SERVER URL
-const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
+const API_BASE_URL = import.meta.env.PROD
+  ? ""
+  : import.meta.env.VITE_BASE_API_URL;
 const transactionEndpoint = "/api/transactions";
 
 const API_URL = API_BASE_URL + transactionEndpoint;

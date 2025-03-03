@@ -2,10 +2,7 @@
 import { useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteSelectedTransactions,
-  fetchTransactions,
-} from "../redux/transaction/transactionActions";
+import { deleteSelectedTransactions } from "../redux/transaction/transactionActions";
 
 const TransactionTable = () => {
   const { transactions } = useSelector((state) => state.transactions);
