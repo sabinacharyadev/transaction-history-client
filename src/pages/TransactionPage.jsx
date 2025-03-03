@@ -19,8 +19,7 @@ const TransactionPage = () => {
   return (
     <Container>
       <TopNavBar />
-      {/* Transaction Form */}
-      <TransactionForm userId={user.id} fetchTransactions={fetchTransactions} />
+      <TransactionForm />
       <TransactionTable />
     </Container>
   );

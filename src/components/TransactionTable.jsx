@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteSelectedTransactions,
+  fetchTransactions,
+} from "../redux/transaction/transactionActions";
 
 const TransactionTable = () => {
   const { transactions } = useSelector((state) => state.transactions);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [selectedTransactionsId, setSelectedTransactionsId] = useState([]);
 
   const toggleSelectedTransactionIds = (transactionId) => {
@@ -17,6 +23,10 @@ const TransactionTable = () => {
           selectedTransactionsId.filter((item) => item !== transactionId)
         )
       : setSelectedTransactionsId([...selectedTransactionsId, transactionId]);
+  };
+
+  const handleOnDelete = () => {
+    dispatch(deleteSelectedTransactions(user.id, selectedTransactionsId));
   };
   return (
     <>
@@ -36,7 +46,9 @@ const TransactionTable = () => {
             <th>Date</th>
             <th style={{ width: "20rem" }}>
               {!!selectedTransactionsId.length && (
-                <Button variant="outline-danger">Delete Selected</Button>
+                <Button variant="outline-danger" onClick={handleOnDelete}>
+                  Delete Selected
+                </Button>
               )}
               {!selectedTransactionsId.length && (
                 <span className="text-danger">Delete</span>

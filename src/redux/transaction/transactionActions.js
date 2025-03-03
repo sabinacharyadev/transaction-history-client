@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
-import { getTransaction } from "../../axios/transactionAxios";
+import {
+  getTransaction,
+  deleteTransactions,
+} from "../../axios/transactionAxios";
 import { setTransactions } from "./transactionSlice";
 
 export const fetchTransactions = (userId) => async (dispatch) => {
@@ -9,3 +12,14 @@ export const fetchTransactions = (userId) => async (dispatch) => {
   }
   dispatch(setTransactions(response.data));
 };
+
+export const deleteSelectedTransactions =
+  (userId, selectedIds) => async (dispatch) => {
+    const response = await deleteTransactions(userId, selectedIds);
+    if (response.status === "error") {
+      return toast.error(response.message);
+    }
+
+    toast.success(response.data.deletedCount + " " + response.message);
+    dispatch(fetchTransactions(userId));
+  };
