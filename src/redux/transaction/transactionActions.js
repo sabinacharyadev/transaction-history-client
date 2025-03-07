@@ -13,6 +13,7 @@ export const fetchTransactions = (userId) => async (dispatch) => {
   dispatch(setTransactions(response.data));
 };
 
+// deleteTransactionsAction
 export const deleteSelectedTransactions =
   (userId, selectedIds) => async (dispatch) => {
     const response = await deleteTransactions(userId, selectedIds);

@@ -35,6 +35,7 @@ export const getTransaction = (userId) => {
   return response;
 };
 
+// DELETE selected transaction | DELETE
 export const deleteTransactions = (userId, selectedIds) => {
   const response = axios
     .delete(`${API_URL}`, {

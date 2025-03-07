@@ -7,7 +7,7 @@ import transactionReducer from "./redux/transaction/transactionSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
-    transactions: transactionReducer,
+    transactions: transactionReducer, //transaction slice
   },
 });
 
